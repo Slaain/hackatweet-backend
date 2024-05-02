@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
-require('../models/connection')
-require('../models/users')
-require('../models/tweets')
+require('../models/connections')
+const User = require('../models/users')
+const Tweet = require('../models/tweets')
+const { checkBody } = require('../modules/checkBody');
+
 
 
 router.post('/', async (req, res) => {
@@ -11,11 +13,12 @@ router.post('/', async (req, res) => {
         return;
     }
 
-    const author = await User.find({token: req.body.token})
-    
+    const author = await User.findOne({token: req.body.token})
+
     if(author){
+        console.log(author)
         const newTweet = new Tweet({
-            author: author,
+            author: author._id,
             content: req.body.content,
             created_at: Date.now(),
             usersWhoLiked: [],
@@ -28,3 +31,13 @@ router.post('/', async (req, res) => {
     }
 
 });
+
+router.get('/', (req, res) => {
+    Tweet.find()
+    .populate('author', 'firstname username')
+    .then(data => {
+        res.json({data})
+    })
+})
+
+module.exports = router;
