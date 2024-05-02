@@ -8,7 +8,7 @@ const uid2 = require('uid2');
 const bcrypt = require('bcrypt');
 
 /* GET users listing. */
-router.post('/signup', function(req, res,) {
+router.post('/signups', function(req, res,) {
   if (!checkBody(req.body, ['username', 'password'])) {
     res.json({ result: false, error: 'Missing or empty fields' });
     return;
@@ -32,7 +32,7 @@ User.findOne({firstname: req.body.username,firstname: req.body.username }).then(
 })
 });
 
-router.post('/signin', (req, res) => {
+router.post('/signins', (req, res) => {
   if (!checkBody(req.body, ['username', 'password'])) {
     res.json({ result: false, error: 'Missing or empty fields' });
     return;
