@@ -36,7 +36,7 @@ router.get('/', (req, res) => {
     Tweet.find()
     .populate('author', 'firstname username')
     .then(data => {
-        res.json({data})
+        res.json({result: true, data})
     })
 })
 
