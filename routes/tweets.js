@@ -40,4 +40,14 @@ router.get('/', (req, res) => {
     })
 })
 
+router.delete('/', (req, res) => {
+    if (!checkBody(req.body, ['_id'])) {
+        res.json({ result: false, error: 'Missing or empty fields' });
+        return;
+    }
+
+    Tweet.deleteOne({_id: req.body._id})
+    .then(res.json({result: true}))
+})
+
 module.exports = router;
